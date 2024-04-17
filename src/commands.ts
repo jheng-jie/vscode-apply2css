@@ -114,7 +114,7 @@ export const TailwindcssCommand = vscode.commands.registerCommand(
       }
 
       // 覆蓋 variable TODO
-      const varPattern = /^(\s+)?--.*[a-z0-9_-]/gm;
+      const varPattern = /^(\s+)?--tw.*[a-z0-9_-]/gm;
       const varMatches = tailwindOutput.match(varPattern);
       if (varMatches) {
         varMatches.forEach(function (match) {
@@ -127,12 +127,10 @@ export const TailwindcssCommand = vscode.commands.registerCommand(
 
       // 每一行最後加上分號
       const matchRes = tailwindOutput
-        // 刪掉換行開頭
-        ?.replace(/^\n|\n$/gm, "")
         // 刪除單行只有;的行
         ?.replace(/^[\s;]*[\r\n]+/gm, "")
         // 刪除 variable 找不到參數的設定
-        ?.replace(/var\([^)]*\)/g, "0")
+        ?.replace(/var\(--tw[^)]*\)/g, "0")
         // 刪除 .tmp > 的 .tmp
         ?.replace(/\.tmp\s>/, ">")
         // 最後加上分號
